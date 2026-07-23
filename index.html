@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhaaga — Ek Rakhi, Teen Dost</title>
+<meta name="description" content="Mira Road se Lucknow tak — ek dhaaga jo kabhi toota nahi.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Poppins:wght@300;400;500;600&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --maroon:#5C1A22;
+    --marigold:#E8A33D;
+    --gold:#C9A227;
+    --cream:#FBF3E7;
+    --thread:#B23A48;
+    --mehendi:#4C6B3F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--maroon);
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+  ::selection{background:var(--marigold);color:var(--maroon);}
+
+  h1,h2,h3,.display{font-family:'Rozha One',serif;}
+  .hand{font-family:'Kalam',cursive;}
+
+  /* Texture overlay */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background-image:radial-gradient(var(--gold) 0.5px, transparent 0.5px);
+    background-size:22px 22px;
+    opacity:0.08;
+    pointer-events:none;
+    z-index:1;
+  }
+
+  /* Thread canvas that runs the length of the page */
+  #threadCanvas{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    z-index:2;
+  }
+
+  section{
+    position:relative;
+    z-index:3;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:6vh 6vw;
+    text-align:center;
+  }
+
+  /* ---------- HERO ---------- */
+  #hero{
+    background:linear-gradient(180deg, var(--maroon) 0%, #7a2530 100%);
+    color:var(--cream);
+  }
+  #hero .eyebrow{
+    letter-spacing:4px;
+    font-size:0.8rem;
+    text-transform:uppercase;
+    color:var(--marigold);
+    margin-bottom:18px;
+    opacity:0;
+    animation:fadeUp 1s ease forwards 0.3s;
+  }
+  #hero h1{
+    font-size:clamp(2.6rem, 8vw, 5.5rem);
+    line-height:1.05;
+    color:var(--marigold);
+    text-shadow:0 0 40px rgba(232,163,61,0.3);
+    opacity:0;
+    animation:fadeUp 1s ease forwards 0.6s;
+  }
+  #hero p{
+    max-width:520px;
+    margin-top:22px;
+    font-weight:300;
+    font-size:1.05rem;
+    line-height:1.7;
+    color:#f3ded0;
+    opacity:0;
+    animation:fadeUp 1s ease forwards 0.9s;
+  }
+  #hero .scrollcue{
+    margin-top:60px;
+    font-size:0.85rem;
+    letter-spacing:2px;
+    color:var(--marigold);
+    opacity:0;
+    animation:fadeUp 1s ease forwards 1.3s, bob 2s ease-in-out infinite 2.3s;
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+
+  /* ---------- STORY ---------- */
+  #story{background:var(--cream);}
+  #story .badge{
+    font-size:0.8rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--mehendi);
+    margin-bottom:16px;
+  }
+  #story h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:24px;}
+  #story p{max-width:640px;font-size:1.05rem;line-height:1.9;color:#5a3a2e;}
+  #story p + p{margin-top:14px;}
+  .highlight{color:var(--thread);font-weight:600;}
+
+  /* ---------- GALLERY ---------- */
+  #gallery{background:var(--cream);}
+  #gallery .badge{
+    font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;
+    color:var(--mehendi);margin-bottom:16px;
+  }
+  #gallery h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:40px;}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(160px,240px));
+    gap:20px;
+    max-width:640px;
+  }
+  .gitem{
+    position:relative;
+    border-radius:6px;
+    overflow:hidden;
+    background:var(--maroon);
+    box-shadow:0 14px 30px rgba(92,26,34,0.2);
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .gitem.in-view{opacity:1;transform:translateY(0);}
+  .gitem img{
+    width:100%;height:100%;
+    display:block;
+    object-fit:cover;
+    aspect-ratio:1/1;
+  }
+  .gitem.tall{grid-row:span 2;}
+  .gitem.tall img{aspect-ratio:1/2;}
+  .gitem.wide{grid-column:span 2;}
+  .gitem.wide img{aspect-ratio:16/9;}
+  .gitem figcaption{
+    padding:12px 14px;
+    font-size:0.82rem;
+    color:var(--cream);
+    background:rgba(92,26,34,0.92);
+    font-weight:300;
+    line-height:1.5;
+    text-align:left;
+  }
+  .gitem.rakhi-photo{border:2px solid var(--marigold);}
+  .gitem figcaption.thanks{font-size:0.85rem;}
+
+  /* ---------- FRIENDS ---------- */
+  #friends{background:linear-gradient(180deg,var(--cream), #f6e9d6);}
+  #friends h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:12px;}
+  #friends .sub{font-family:'Kalam',cursive;font-size:1.15rem;color:var(--thread);margin-bottom:50px;}
+
+  .friend-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:28px;
+    justify-content:center;
+    max-width:1000px;
+  }
+  .friend-card{
+    background:var(--maroon);
+    color:var(--cream);
+    width:260px;
+    border-radius:4px 4px 60px 4px;
+    padding:36px 26px 30px;
+    position:relative;
+    box-shadow:0 18px 40px rgba(92,26,34,0.25);
+    transform:translateY(40px);
+    opacity:0;
+    transition:transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.8s ease;
+    overflow:hidden;
+  }
+  .friend-card.in-view{transform:translateY(0);opacity:1;}
+  .friend-card::before{
+    content:"";
+    position:absolute;
+    top:-30px;right:-30px;
+    width:100px;height:100px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(232,163,61,0.35), transparent 70%);
+  }
+  .friend-card .rakhi-icon{
+    width:46px;height:46px;
+    margin:0 auto 18px;
+    display:block;
+  }
+  .friend-card h3{font-size:1.5rem;color:var(--marigold);margin-bottom:8px;}
+  .friend-card .role{font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;color:#e7c9a0;margin-bottom:14px;}
+  .friend-card p{font-size:0.92rem;line-height:1.6;color:#f3ded0;font-weight:300;}
+
+  /* ---------- DISTANCE ---------- */
+  #distance{background:var(--maroon);color:var(--cream);}
+  #distance .cities{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:26px;
+    flex-wrap:wrap;
+    margin-bottom:36px;
+    font-family:'Rozha One',serif;
+    font-size:clamp(1.3rem,4vw,2.2rem);
+  }
+  #distance .cities span.city{color:var(--marigold);}
+  #distance .cities .line{
+    width:90px;height:2px;
+    background:repeating-linear-gradient(90deg,var(--thread) 0 8px, transparent 8px 14px);
+    position:relative;
+  }
+  #distance .cities .line::after{
+    content:"❤";
+    position:absolute;
+    top:-11px;left:50%;
+    transform:translateX(-50%);
+    font-size:0.9rem;
+    color:var(--thread);
+  }
+  #distance p{max-width:560px;font-size:1.05rem;line-height:1.8;color:#f3ded0;font-weight:300;}
+
+  /* ---------- VIDEO MEMORY ---------- */
+  #video-memory{background:linear-gradient(180deg, #f6e9d6, var(--cream));}
+  #video-memory .badge{
+    font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;
+    color:var(--mehendi);margin-bottom:16px;
+  }
+  #video-memory h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:30px;}
+  #video-memory video{
+    width:100%;
+    max-width:420px;
+    border-radius:10px;
+    box-shadow:0 20px 45px rgba(92,26,34,0.25);
+    border:3px solid var(--marigold);
+  }
+  #video-memory .videonote{
+    margin-top:18px;
+    font-family:'Kalam',cursive;
+    color:var(--thread);
+    font-size:1rem;
+  }
+
+  /* ---------- WISH ---------- */
+  #wish{background:linear-gradient(180deg,#f6e9d6, var(--cream));}
+  #wish h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:18px;}
+  #wish p.msg{
+    max-width:600px;
+    font-family:'Kalam',cursive;
+    font-size:1.3rem;
+    line-height:1.8;
+    color:var(--maroon);
+    margin-bottom:40px;
+  }
+  #wish .btnrow{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 30px;
+    border-radius:50px;
+    font-size:0.95rem;
+    font-weight:500;
+    text-decoration:none;
+    cursor:pointer;
+    border:none;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .btn:hover{transform:translateY(-3px);}
+  .btn-primary{
+    background:var(--thread);
+    color:var(--cream);
+    box-shadow:0 10px 26px rgba(178,58,72,0.35);
+  }
+  .btn-outline{
+    background:transparent;
+    color:var(--maroon);
+    border:2px solid var(--maroon);
+  }
+
+  /* ---------- RAKHI TIE MOMENT ---------- */
+  #tie{
+    background:var(--maroon);
+    color:var(--cream);
+    min-height:80vh;
+  }
+  #tie canvas{max-width:280px;width:70vw;height:auto;margin-bottom:24px;}
+  #tie h3{font-size:clamp(1.6rem,4vw,2.4rem);color:var(--marigold);margin-bottom:12px;}
+  #tie p{max-width:480px;font-size:0.95rem;color:#f3ded0;font-weight:300;line-height:1.7;}
+  #tapHint{font-size:0.8rem;letter-spacing:2px;color:var(--marigold);margin-top:22px;text-transform:uppercase;opacity:0.85;}
+
+  footer{
+    position:relative;z-index:3;
+    background:var(--maroon);
+    color:#e7c9a0;
+    text-align:center;
+    padding:34px 20px;
+    font-size:0.85rem;
+    font-weight:300;
+  }
+  footer span{color:var(--marigold);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="threadCanvas"></canvas>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="eyebrow">Raksha Bandhan · Ek Yaad, Ek Dhaaga</div>
+  <h1>Dhaaga</h1>
+  <p>Mira Road ki wo shifts, wo hasi-mazaak, aur ab Lucknow se bhi utna hi paka rishta — kyunki asli dosti mein distance sirf ek number hai.</p>
+  <div class="scrollcue">↓ Scroll karo ↓</div>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="badge">Kahaani</div>
+  <h2>Reliance Fashion, Mira Road</h2>
+  <p>Kuch saath, kuch hasi, aur teen aisi dost jo colleague se family ban gayi — <span class="highlight">Afreen, Nisha aur Madhuri.</span></p>
+  <p>Waqt ke saath shehar badla, kaam badla, main Lucknow chala gaya — par jo dhaaga waha bandha tha, wo aaj bhi utna hi mazboot hai.</p>
+  <p>Is Raksha Bandhan, main waha nahi aa sakta — toh yeh chhota sa digital tohfa, tum teeno ke liye.</p>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="badge">Yaadein</div>
+  <h2>Wo Din, Wo Hasi</h2>
+  <div class="gallery-grid">
+    <figure class="gitem tall">
+      <img src="assets/photo-2.jpg" alt="Chaaron dost ek saath" loading="lazy">
+      <figcaption>Char dost, ek frame — Mira Road wali team 🩷</figcaption>
+    </figure>
+    <figure class="gitem">
+      <img src="assets/photo-1.jpg" alt="Ek dost ke saath selfie" loading="lazy">
+      <figcaption>Kaam ke beech nikle wo pal</figcaption>
+    </figure>
+    <figure class="gitem">
+      <img src="assets/photo-3.jpg" alt="Mehendi wale haath, khushi" loading="lazy">
+      <figcaption>Mehendi, masti aur wahi purani hasi</figcaption>
+    </figure>
+    <figure class="gitem wide rakhi-photo">
+      <img src="assets/photo-rakhi-wrist.jpg" alt="Rakhi bandhi hui kalai" loading="lazy">
+      <figcaption class="thanks">Yeh rakhi <span class="highlight">Nisha aur Afreen</span> ne pichle Raksha Bandhan pe bandhi thi — shukriya tum dono ka, yeh dhaaga aaj bhi utna hi mazboot hai. 🧵💛</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- FRIENDS -->
+<section id="friends">
+  <h2>Meri Teen Rakhi-Dost</h2>
+  <div class="sub">"Dosti wahi jo dooriyon mein bhi paas rahe"</div>
+  <div class="friend-row">
+    <div class="friend-card">
+      <svg class="rakhi-icon" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="24" r="14" stroke="#E8A33D" stroke-width="3"/><circle cx="32" cy="24" r="6" fill="#E8A33D"/><path d="M32 38 L32 58" stroke="#E8A33D" stroke-width="3" stroke-linecap="round"/></svg>
+      <h3>Afreen</h3>
+      <div class="role">Mira Road · Reliance</div>
+      <p>Wo lunch break wali masti aur tumhari hasi — kabhi na bhoolne wali. Rakhi ka pehla dhaaga tumhare naam.</p>
+    </div>
+    <div class="friend-card">
+      <svg class="rakhi-icon" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="24" r="14" stroke="#E8A33D" stroke-width="3"/><circle cx="32" cy="24" r="6" fill="#E8A33D"/><path d="M32 38 L32 58" stroke="#E8A33D" stroke-width="3" stroke-linecap="round"/></svg>
+      <h3>Nisha</h3>
+      <div class="role">Mira Road · Reliance</div>
+      <p>Har mushkil shift mein tumhara saath sabse bada support tha. Yeh dhaaga tumhare bharose ke naam.</p>
+    </div>
+    <div class="friend-card">
+      <svg class="rakhi-icon" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="24" r="14" stroke="#E8A33D" stroke-width="3"/><circle cx="32" cy="24" r="6" fill="#E8A33D"/><path d="M32 38 L32 58" stroke="#E8A33D" stroke-width="3" stroke-linecap="round"/></svg>
+      <h3>Madhuri</h3>
+      <div class="role">Mira Road · Reliance</div>
+      <p>Tumhari baatein aur tumhara apnapan — aaj bhi utna hi yaad aata hai. Yeh dhaaga tumhari yaadon ke naam.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DISTANCE -->
+<section id="distance">
+  <div class="cities"><span class="city">Lucknow</span><span class="line"></span><span class="city">Mira Road</span></div>
+  <p>Kilometers badh gaye, par rishta wahi hai. Is Raksha Bandhan mein main tumhare paas nahi, par dil se utna hi kareeb hoon.</p>
+</section>
+
+<!-- TIE MOMENT -->
+<section id="tie">
+  <canvas id="tieCanvas" width="280" height="280"></canvas>
+  <h3>Tap karke Rakhi Bandho</h3>
+  <p>Screen pe tap karo aur dekho dhaaga kaise bandhta hai — jaise tum teeno mere haath pe bandhti.</p>
+  <div id="tapHint">Tap the ribbon ✦</div>
+</section>
+
+<!-- VIDEO MEMORY -->
+<section id="video-memory">
+  <div class="badge">Ek Aur Yaad</div>
+  <h2>Chhota Sa Video</h2>
+  <video controls preload="none" poster="assets/photo-2.jpg" playsinline>
+    <source src="assets/memory-video.mp4" type="video/mp4">
+    Tumhara browser video support nahi karta.
+  </video>
+  <p class="videonote">Play daba ke dekh lena ✨</p>
+</section>
+
+<!-- WISH -->
+<section id="wish">
+  <h2>Happy Raksha Bandhan</h2>
+  <p class="msg">Afreen, Nisha, Madhuri — is dhaage ka matlab hai ki main door hoke bhi tumhare saath hoon. Bahut pyaar aur dua tum teeno ke liye. 🎉🧵</p>
+  <div class="btnrow">
+    <a class="btn btn-primary" id="waShare" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
+    <a class="btn btn-outline" href="#hero">Wapas Upar</a>
+  </div>
+</section>
+
+<footer>
+  Banaya gaya pyaar se, Lucknow se Mira Road tak · <span>Happy Raksha Bandhan 2026</span>
+</footer>
+
+<script>
+/* ---------------- Background thread that grows with scroll ---------------- */
+const canvas = document.getElementById('threadCanvas');
+const ctx = canvas.getContext('2d');
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function drawThread(){
+  const progress = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const w = canvas.width, h = canvas.height;
+  ctx.save();
+  ctx.strokeStyle = 'rgba(178,58,72,0.35)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  const points = 6;
+  ctx.moveTo(w*0.08, 0);
+  for(let i=0;i<=points;i++){
+    const t = i/points;
+    const x = w*0.08 + Math.sin((t*6)+progress*10)*w*0.03;
+    const y = t*h;
+    ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  ctx.strokeStyle = 'rgba(232,163,61,0.3)';
+  ctx.beginPath();
+  ctx.moveTo(w*0.92, 0);
+  for(let i=0;i<=points;i++){
+    const t = i/points;
+    const x = w*0.92 + Math.cos((t*6)+progress*10)*w*0.03;
+    const y = t*h;
+    ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+window.addEventListener('scroll', ()=>requestAnimationFrame(drawThread));
+drawThread();
+
+/* ---------------- Friend cards reveal on scroll ---------------- */
+const cards = document.querySelectorAll('.friend-card');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach((entry, idx)=>{
+    if(entry.isIntersecting){
+      setTimeout(()=>entry.target.classList.add('in-view'), idx*120);
+      io.unobserve(entry.target);
+    }
+  });
+},{threshold:0.25});
+cards.forEach(c=>io.observe(c));
+
+const gitems = document.querySelectorAll('.gitem');
+const gio = new IntersectionObserver((entries)=>{
+  entries.forEach((entry, idx)=>{
+    if(entry.isIntersecting){
+      setTimeout(()=>entry.target.classList.add('in-view'), idx*100);
+      gio.unobserve(entry.target);
+    }
+  });
+},{threshold:0.2});
+gitems.forEach(g=>gio.observe(g));
+
+/* ---------------- Rakhi tie canvas interaction ---------------- */
+const tieCanvas = document.getElementById('tieCanvas');
+const tctx = tieCanvas.getContext('2d');
+let tied = false;
+let animProgress = 0;
+
+function drawRakhi(p){
+  const w = tieCanvas.width, h = tieCanvas.height;
+  tctx.clearRect(0,0,w,h);
+  // wrist base
+  tctx.strokeStyle = '#E8A33D';
+  tctx.lineWidth = 8;
+  tctx.beginPath();
+  tctx.arc(w/2, h/2, 60, 0, Math.PI*2*Math.min(p,1));
+  tctx.stroke();
+
+  if(p > 0.15){
+    // bow left loop
+    tctx.fillStyle = '#B23A48';
+    tctx.beginPath();
+    tctx.ellipse(w/2 - 26*Math.min((p-0.15)/0.4,1), h/2 - 14, 26, 16, -0.5, 0, Math.PI*2);
+    tctx.fill();
+  }
+  if(p > 0.4){
+    tctx.beginPath();
+    tctx.ellipse(w/2 + 26*Math.min((p-0.4)/0.4,1), h/2 - 14, 26, 16, 0.5, 0, Math.PI*2);
+    tctx.fill();
+  }
+  if(p > 0.7){
+    tctx.beginPath();
+    tctx.arc(w/2, h/2 - 10, 10*Math.min((p-0.7)/0.3,1), 0, Math.PI*2);
+    tctx.fillStyle = '#C9A227';
+    tctx.fill();
+  }
+  if(p >= 1){
+    // sparkle particles
+    for(let i=0;i<10;i++){
+      const angle = (i/10)*Math.PI*2;
+      const r = 70 + Math.sin(Date.now()/300+i)*6;
+      const x = w/2 + Math.cos(angle)*r;
+      const y = h/2 + Math.sin(angle)*r;
+      tctx.beginPath();
+      tctx.arc(x,y,2,0,Math.PI*2);
+      tctx.fillStyle = 'rgba(232,163,61,0.8)';
+      tctx.fill();
+    }
+  }
+}
+drawRakhi(0);
+
+function animateTie(){
+  if(animProgress < 1){
+    animProgress += 0.02;
+    drawRakhi(animProgress);
+    requestAnimationFrame(animateTie);
+  } else {
+    drawRakhi(1);
+    if(tied){
+      requestAnimationFrame(animateTie);
+    }
+  }
+}
+
+tieCanvas.addEventListener('click', ()=>{
+  if(!tied){
+    tied = true;
+    animProgress = 0;
+    document.getElementById('tapHint').textContent = 'Rakhi bandh gayi! ✦';
+    animateTie();
+  }
+});
+
+/* ---------------- WhatsApp share ---------------- */
+const waLink = document.getElementById('waShare');
+const shareText = encodeURIComponent("Happy Raksha Bandhan! Yeh raha ek chhota sa digital tohfa tumhare liye — dekhna zaroor 🧵💛 " + window.location.href);
+waLink.href = "https://wa.me/?text=" + shareText;
+</script>
+
+</body>
+</html>
+
