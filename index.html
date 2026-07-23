@@ -97,13 +97,27 @@
     opacity:0;
     animation:fadeUp 1s ease forwards 0.9s;
   }
+  
+  /* Audio Player Style */
+  .audio-wrap {
+    margin-top: 30px;
+    opacity: 0;
+    animation: fadeUp 1s ease forwards 1.1s;
+  }
+  .audio-wrap audio {
+    height: 40px;
+    border-radius: 50px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    outline: none;
+  }
+
   #hero .scrollcue{
-    margin-top:60px;
+    margin-top: 50px;
     font-size:0.85rem;
     letter-spacing:2px;
     color:var(--marigold);
     opacity:0;
-    animation:fadeUp 1s ease forwards 1.3s, bob 2s ease-in-out infinite 2.3s;
+    animation:fadeUp 1s ease forwards 1.4s, bob 2s ease-in-out infinite 2.4s;
   }
   @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
@@ -333,6 +347,15 @@
   <div class="eyebrow">Raksha Bandhan · Ek Yaad, Ek Dhaaga</div>
   <h1>Dhaaga</h1>
   <p>Mira Road ki wo shifts, wo hasi-mazaak, aur ab Lucknow se bhi utna hi paka rishta — kyunki asli dosti mein distance sirf ek number hai.</p>
+  
+  <!-- NEW AUDIO PLAYER -->
+  <div class="audio-wrap">
+    <audio controls loop>
+      <source src="rakhiaudio.mp3" type="audio/mpeg">
+      Aapka browser audio support nahi karta.
+    </audio>
+  </div>
+
   <div class="scrollcue">↓ Scroll karo ↓</div>
 </section>
 
@@ -345,21 +368,21 @@
   <p>Is Raksha Bandhan, main waha nahi aa sakta — toh yeh chhota sa digital tohfa, tum teeno ke liye.</p>
 </section>
 
-<!-- GALLERY (Images updated exactly here) -->
+<!-- GALLERY (Images updated to pic1, pic2, pic3) -->
 <section id="gallery">
   <div class="badge">Yaadein</div>
   <h2>Wo Din, Wo Hasi</h2>
   <div class="gallery-grid">
     <figure class="gitem tall">
-      <img src="1000182818.jpg" alt="Chaaron dost ek saath" loading="lazy">
+      <img src="pic1.jpg" alt="Chaaron dost ek saath" loading="lazy">
       <figcaption>Char dost, ek frame — Mira Road wali team 🩷</figcaption>
     </figure>
     <figure class="gitem">
-      <img src="1000182813.jpg" alt="Mehendi wale haath, khushi" loading="lazy">
+      <img src="pic2.jpg" alt="Mehendi wale haath, khushi" loading="lazy">
       <figcaption>Mehendi, masti aur wahi purani hasi</figcaption>
     </figure>
     <figure class="gitem rakhi-photo">
-      <img src="1000182815.jpg" alt="Rakhi bandhi hui kalai" loading="lazy">
+      <img src="pic3.jpg" alt="Rakhi bandhi hui kalai" loading="lazy">
       <figcaption class="thanks">Yeh rakhi <span class="highlight">Nisha aur Afreen</span> ne pichle Raksha Bandhan pe bandhi thi — shukriya tum dono ka, yeh dhaaga aaj bhi utna hi mazboot hai. 🧵💛</figcaption>
     </figure>
   </div>
@@ -405,11 +428,11 @@
   <div id="tapHint">Tap the ribbon ✦</div>
 </section>
 
-<!-- VIDEO MEMORY (Updated here) -->
+<!-- VIDEO MEMORY -->
 <section id="video-memory">
   <div class="badge">Ek Aur Yaad</div>
   <h2>Store Wali Masti</h2>
-  <video controls preload="none" poster="1000182818.jpg" playsinline>
+  <video controls preload="none" poster="pic1.jpg" playsinline>
     <source src="memory-video.mp4" type="video/mp4">
     Tumhara browser video support nahi karta.
   </video>
@@ -576,5 +599,5 @@ waLink.href = "https://wa.me/?text=" + shareText;
 </script>
 
 </body>
-    </html>
-    
+  </html>
+  
