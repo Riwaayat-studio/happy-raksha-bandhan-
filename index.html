@@ -97,13 +97,14 @@
     opacity:0;
     animation:fadeUp 1s ease forwards 0.9s;
   }
+  
   #hero .scrollcue{
-    margin-top:60px;
+    margin-top: 50px;
     font-size:0.85rem;
     letter-spacing:2px;
     color:var(--marigold);
     opacity:0;
-    animation:fadeUp 1s ease forwards 1.3s, bob 2s ease-in-out infinite 2.3s;
+    animation:fadeUp 1s ease forwards 1.4s, bob 2s ease-in-out infinite 2.4s;
   }
   @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
@@ -150,12 +151,12 @@
     width:100%;height:100%;
     display:block;
     object-fit:cover;
-    object-position: center 20%; /* Thoda face ki taraf focus rahega */
+    object-position: center 20%;
     aspect-ratio:1/1;
   }
   .gitem.wide{grid-column:span 2;}
   .gitem.wide img{
-    aspect-ratio:4/3; /* Landscape photo ke liye perfect ratio jisse chehre na katen */
+    aspect-ratio:4/3;
   }
   .gitem figcaption{
     padding:12px 14px;
@@ -261,6 +262,17 @@
     font-size:1rem;
   }
 
+  /* ---------- RAKHI TIE MOMENT ---------- */
+  #tie{
+    background:var(--maroon);
+    color:var(--cream);
+    min-height:80vh;
+  }
+  #tie canvas{max-width:280px;width:70vw;height:auto;margin-bottom:24px; cursor:pointer;}
+  #tie h3{font-size:clamp(1.6rem,4vw,2.4rem);color:var(--marigold);margin-bottom:12px;}
+  #tie p{max-width:480px;font-size:0.95rem;color:#f3ded0;font-weight:300;line-height:1.7;}
+  #tapHint{font-size:0.8rem;letter-spacing:2px;color:var(--marigold);margin-top:22px;text-transform:uppercase;opacity:0.85;}
+
   /* ---------- WISH ---------- */
   #wish{background:linear-gradient(180deg,#f6e9d6, var(--cream));}
   #wish h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:18px;}
@@ -270,44 +282,8 @@
     font-size:1.3rem;
     line-height:1.8;
     color:var(--maroon);
-    margin-bottom:40px;
+    margin-bottom:20px;
   }
-  #wish .btnrow{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
-  .btn{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:14px 30px;
-    border-radius:50px;
-    font-size:0.95rem;
-    font-weight:500;
-    text-decoration:none;
-    cursor:pointer;
-    border:none;
-    transition:transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .btn:hover{transform:translateY(-3px);}
-  .btn-primary{
-    background:var(--thread);
-    color:var(--cream);
-    box-shadow:0 10px 26px rgba(178,58,72,0.35);
-  }
-  .btn-outline{
-    background:transparent;
-    color:var(--maroon);
-    border:2px solid var(--maroon);
-  }
-
-  /* ---------- RAKHI TIE MOMENT ---------- */
-  #tie{
-    background:var(--maroon);
-    color:var(--cream);
-    min-height:80vh;
-  }
-  #tie canvas{max-width:280px;width:70vw;height:auto;margin-bottom:24px;}
-  #tie h3{font-size:clamp(1.6rem,4vw,2.4rem);color:var(--marigold);margin-bottom:12px;}
-  #tie p{max-width:480px;font-size:0.95rem;color:#f3ded0;font-weight:300;line-height:1.7;}
-  #tapHint{font-size:0.8rem;letter-spacing:2px;color:var(--marigold);margin-top:22px;text-transform:uppercase;opacity:0.85;}
 
   footer{
     position:relative;z-index:3;
@@ -349,7 +325,7 @@
   <p>Is Raksha Bandhan, main waha nahi aa sakta — toh yeh chhota sa digital tohfa, tum teeno ke liye.</p>
 </section>
 
-<!-- GALLERY (Image Cropping Fixed - pic1 is now Wide) -->
+<!-- GALLERY -->
 <section id="gallery">
   <div class="badge">Yaadein</div>
   <h2>Wo Din, Wo Hasi</h2>
@@ -374,23 +350,26 @@
   <h2>Meri Teen Rakhi-Dost</h2>
   <div class="sub">"Dosti wahi jo dooriyon mein bhi paas rahe"</div>
   <div class="friend-row">
+    <!-- Afreen Card -->
     <div class="friend-card">
       <svg class="rakhi-icon" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="24" r="14" stroke="#E8A33D" stroke-width="3"/><circle cx="32" cy="24" r="6" fill="#E8A33D"/><path d="M32 38 L32 58" stroke="#E8A33D" stroke-width="3" stroke-linecap="round"/></svg>
       <h3>Afreen</h3>
       <div class="role">Mira Road · Reliance</div>
-      <p>Wo lunch break wali masti aur tumhari hasi — kabhi na bhoolne wali. Rakhi ka pehla dhaaga tumhare naam.</p>
+      <p>Meri senior jisne sabse pehle mujhe Fashion Factory mein kapde fold karna sikhaya tha. Mera 30 minute ka lunch 1 ghante tak chalta tha, aur canteen se wapas aate hi inka daily ka ek hi sawal hota tha — "Itna late kyu ho gaya?"</p>
     </div>
+    <!-- Nisha Card -->
     <div class="friend-card">
       <svg class="rakhi-icon" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="24" r="14" stroke="#E8A33D" stroke-width="3"/><circle cx="32" cy="24" r="6" fill="#E8A33D"/><path d="M32 38 L32 58" stroke="#E8A33D" stroke-width="3" stroke-linecap="round"/></svg>
       <h3>Nisha</h3>
       <div class="role">Mira Road · Reliance</div>
-      <p>Har mushkil shift mein tumhara saath sabse bada support tha. Yeh dhaaga tumhare bharose ke naam.</p>
+      <p>Inke saath toh alag hi level ki masti hoti thi! Upper hook pe dresses taangne ke liye inka haath nahi pahunchta tha, toh meri help leti thi. Aur main roz chidhata tha — "Nisha, Complan piya karo height badhane ke liye!" 🤣</p>
     </div>
+    <!-- Madhuri Card -->
     <div class="friend-card">
       <svg class="rakhi-icon" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="24" r="14" stroke="#E8A33D" stroke-width="3"/><circle cx="32" cy="24" r="6" fill="#E8A33D"/><path d="M32 38 L32 58" stroke="#E8A33D" stroke-width="3" stroke-linecap="round"/></svg>
       <h3>Madhuri</h3>
       <div class="role">Mira Road · Reliance</div>
-      <p>Tumhari baatein aur tumhara apnapan — aaj bhi utna hi yaad aata hai. Yeh dhaaga tumhari yaadon ke naam.</p>
+      <p>Dikhne mein toh ekdum 'bholi gaay' thi, par kabhi-kabhi Afreen aur Nisha ke saath milkar aisi zabardast prank karti thi ki kya hi bataun! Woh yaadein aaj bhi chehre pe hasi laa deti hain.</p>
     </div>
   </div>
 </section>
@@ -399,14 +378,6 @@
 <section id="distance">
   <div class="cities"><span class="city">Lucknow</span><span class="line"></span><span class="city">Mira Road</span></div>
   <p>Kilometers badh gaye, par rishta wahi hai. Is Raksha Bandhan mein main tumhare paas nahi, par dil se utna hi kareeb hoon.</p>
-</section>
-
-<!-- TIE MOMENT -->
-<section id="tie">
-  <canvas id="tieCanvas" width="280" height="280"></canvas>
-  <h3>Tap karke Rakhi Bandho</h3>
-  <p>Screen pe tap karo aur dekho dhaaga kaise bandhta hai — jaise tum teeno mere haath pe bandhti.</p>
-  <div id="tapHint">Tap the ribbon ✦</div>
 </section>
 
 <!-- VIDEO MEMORY -->
@@ -420,14 +391,18 @@
   <p class="videonote">Jab phone use karte pakde gaye the 😂 ✨</p>
 </section>
 
+<!-- TIE MOMENT -->
+<section id="tie">
+  <canvas id="tieCanvas" width="280" height="280"></canvas>
+  <h3>Tap karke Rakhi Bandho</h3>
+  <p>Screen pe tap karo aur dekho dhaaga kaise bandhta hai — jaise tum teeno mere haath pe bandhti.</p>
+  <div id="tapHint">Tap the center dot ✦</div>
+</section>
+
 <!-- WISH -->
 <section id="wish">
   <h2>Happy Raksha Bandhan</h2>
   <p class="msg">Afreen, Nisha, Madhuri — is dhaage ka matlab hai ki main door hoke bhi tumhare saath hoon. Bahut pyaar aur dua tum teeno ke liye. 🎉🧵</p>
-  <div class="btnrow">
-    <a class="btn btn-primary" id="waShare" href="#" target="_blank" rel="noopener">Send on WhatsApp</a>
-    <a class="btn btn-outline" href="#hero">Wapas Upar</a>
-  </div>
 </section>
 
 <footer>
@@ -449,7 +424,6 @@ function startAudio() {
   }
 }
 
-// Jaise hi user screen pe click kare, tap kare, ya scroll kare, music play ho jayega
 window.addEventListener('click', startAudio, { once: true });
 window.addEventListener('touchstart', startAudio, { once: true });
 window.addEventListener('scroll', startAudio, { once: true });
@@ -529,56 +503,75 @@ let animProgress = 0;
 function drawRakhi(p){
   const w = tieCanvas.width, h = tieCanvas.height;
   tctx.clearRect(0,0,w,h);
-  // wrist base
-  tctx.strokeStyle = '#E8A33D';
+  
+  // 1. Faint base circle for the wrist (Always visible)
+  tctx.strokeStyle = 'rgba(232,163,61,0.2)'; 
   tctx.lineWidth = 8;
   tctx.beginPath();
-  tctx.arc(w/2, h/2, 60, 0, Math.PI*2*Math.min(p,1));
+  tctx.arc(w/2, h/2, 60, 0, Math.PI*2);
   tctx.stroke();
 
-  if(p > 0.15){
-    // bow left loop
+  // 2. The Rakhi Thread (grows around the wrist when animating)
+  if(p > 0){
+    tctx.strokeStyle = '#E8A33D';
+    tctx.lineWidth = 8;
+    tctx.beginPath();
+    tctx.arc(w/2, h/2, 60, Math.PI/2, Math.PI/2 + (Math.PI*2*p));
+    tctx.stroke();
+  }
+
+  // 3. Center Dot of Rakhi (Always visible so you know where to tap)
+  tctx.beginPath();
+  tctx.arc(w/2, h/2 - 60, 16, 0, Math.PI*2);
+  tctx.fillStyle = '#B23A48';
+  tctx.fill();
+  tctx.lineWidth = 3;
+  tctx.strokeStyle = '#C9A227';
+  tctx.stroke();
+
+  // 4. Bow Loops (appear when tying finishes)
+  if(p > 0.5){
+    let bowP = (p - 0.5) * 2; // scales from 0 to 1
     tctx.fillStyle = '#B23A48';
+    
+    // Left loop
     tctx.beginPath();
-    tctx.ellipse(w/2 - 26*Math.min((p-0.15)/0.4,1), h/2 - 14, 26, 16, -0.5, 0, Math.PI*2);
+    tctx.ellipse(w/2 - 22*bowP, h/2 - 60, 22*bowP, 12*bowP, -0.2, 0, Math.PI*2);
+    tctx.fill();
+    
+    // Right loop
+    tctx.beginPath();
+    tctx.ellipse(w/2 + 22*bowP, h/2 - 60, 22*bowP, 12*bowP, 0.2, 0, Math.PI*2);
     tctx.fill();
   }
-  if(p > 0.4){
-    tctx.beginPath();
-    tctx.ellipse(w/2 + 26*Math.min((p-0.4)/0.4,1), h/2 - 14, 26, 16, 0.5, 0, Math.PI*2);
-    tctx.fill();
-  }
-  if(p > 0.7){
-    tctx.beginPath();
-    tctx.arc(w/2, h/2 - 10, 10*Math.min((p-0.7)/0.3,1), 0, Math.PI*2);
-    tctx.fillStyle = '#C9A227';
-    tctx.fill();
-  }
+
+  // 5. Sparkles at the end!
   if(p >= 1){
-    // sparkle particles
-    for(let i=0;i<10;i++){
-      const angle = (i/10)*Math.PI*2;
-      const r = 70 + Math.sin(Date.now()/300+i)*6;
+    for(let i=0;i<8;i++){
+      const angle = (i/8)*Math.PI*2 + (Date.now()/500);
+      const r = 35 + Math.sin(Date.now()/200 + i)*6;
       const x = w/2 + Math.cos(angle)*r;
-      const y = h/2 + Math.sin(angle)*r;
+      const y = h/2 - 60 + Math.sin(angle)*r;
+      
       tctx.beginPath();
-      tctx.arc(x,y,2,0,Math.PI*2);
-      tctx.fillStyle = 'rgba(232,163,61,0.8)';
+      tctx.arc(x,y,2.5,0,Math.PI*2);
+      tctx.fillStyle = '#E8A33D';
       tctx.fill();
     }
   }
 }
+// Initial draw call so it's visible before tap
 drawRakhi(0);
 
 function animateTie(){
   if(animProgress < 1){
-    animProgress += 0.02;
+    animProgress += 0.02; // Animation speed
     drawRakhi(animProgress);
     requestAnimationFrame(animateTie);
   } else {
     drawRakhi(1);
     if(tied){
-      requestAnimationFrame(animateTie);
+      requestAnimationFrame(animateTie); // Keep looping for the sparkles
     }
   }
 }
@@ -591,11 +584,6 @@ tieCanvas.addEventListener('click', ()=>{
     animateTie();
   }
 });
-
-/* ---------------- WhatsApp share ---------------- */
-const waLink = document.getElementById('waShare');
-const shareText = encodeURIComponent("Happy Raksha Bandhan! Yeh raha ek chhota sa digital tohfa tumhare liye — dekhna zaroor 🧵💛 " + window.location.href);
-waLink.href = "https://wa.me/?text=" + shareText;
 </script>
 
 </body>
