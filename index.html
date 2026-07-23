@@ -97,27 +97,13 @@
     opacity:0;
     animation:fadeUp 1s ease forwards 0.9s;
   }
-  
-  /* Audio Player Style */
-  .audio-wrap {
-    margin-top: 30px;
-    opacity: 0;
-    animation: fadeUp 1s ease forwards 1.1s;
-  }
-  .audio-wrap audio {
-    height: 40px;
-    border-radius: 50px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    outline: none;
-  }
-
   #hero .scrollcue{
-    margin-top: 50px;
+    margin-top:60px;
     font-size:0.85rem;
     letter-spacing:2px;
     color:var(--marigold);
     opacity:0;
-    animation:fadeUp 1s ease forwards 1.4s, bob 2s ease-in-out infinite 2.4s;
+    animation:fadeUp 1s ease forwards 1.3s, bob 2s ease-in-out infinite 2.3s;
   }
   @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
@@ -164,12 +150,13 @@
     width:100%;height:100%;
     display:block;
     object-fit:cover;
+    object-position: center 20%; /* Thoda face ki taraf focus rahega */
     aspect-ratio:1/1;
   }
-  .gitem.tall{grid-row:span 2;}
-  .gitem.tall img{aspect-ratio:1/2;}
   .gitem.wide{grid-column:span 2;}
-  .gitem.wide img{aspect-ratio:16/9;}
+  .gitem.wide img{
+    aspect-ratio:4/3; /* Landscape photo ke liye perfect ratio jisse chehre na katen */
+  }
   .gitem figcaption{
     padding:12px 14px;
     font-size:0.82rem;
@@ -340,6 +327,9 @@
 </head>
 <body>
 
+<!-- Hidden Audio Player for Autoplay -->
+<audio id="bgMusic" src="rakhiaudio.mp3" loop style="display:none;"></audio>
+
 <canvas id="threadCanvas"></canvas>
 
 <!-- HERO -->
@@ -347,15 +337,6 @@
   <div class="eyebrow">Raksha Bandhan · Ek Yaad, Ek Dhaaga</div>
   <h1>Dhaaga</h1>
   <p>Mira Road ki wo shifts, wo hasi-mazaak, aur ab Lucknow se bhi utna hi paka rishta — kyunki asli dosti mein distance sirf ek number hai.</p>
-  
-  <!-- NEW AUDIO PLAYER -->
-  <div class="audio-wrap">
-    <audio controls loop>
-      <source src="rakhiaudio.mp3" type="audio/mpeg">
-      Aapka browser audio support nahi karta.
-    </audio>
-  </div>
-
   <div class="scrollcue">↓ Scroll karo ↓</div>
 </section>
 
@@ -368,12 +349,12 @@
   <p>Is Raksha Bandhan, main waha nahi aa sakta — toh yeh chhota sa digital tohfa, tum teeno ke liye.</p>
 </section>
 
-<!-- GALLERY (Images updated to pic1, pic2, pic3) -->
+<!-- GALLERY (Image Cropping Fixed - pic1 is now Wide) -->
 <section id="gallery">
   <div class="badge">Yaadein</div>
   <h2>Wo Din, Wo Hasi</h2>
   <div class="gallery-grid">
-    <figure class="gitem tall">
+    <figure class="gitem wide">
       <img src="pic1.jpg" alt="Chaaron dost ek saath" loading="lazy">
       <figcaption>Char dost, ek frame — Mira Road wali team 🩷</figcaption>
     </figure>
@@ -454,6 +435,25 @@
 </footer>
 
 <script>
+/* ---------------- Audio Autoplay Script ---------------- */
+const bgMusic = document.getElementById('bgMusic');
+let isPlaying = false;
+
+function startAudio() {
+  if (!isPlaying) {
+    bgMusic.play().then(() => {
+      isPlaying = true;
+    }).catch((error) => {
+      console.log("Browser ne autoplay block kar diya hai, tap hone tak wait kar raha hai.");
+    });
+  }
+}
+
+// Jaise hi user screen pe click kare, tap kare, ya scroll kare, music play ho jayega
+window.addEventListener('click', startAudio, { once: true });
+window.addEventListener('touchstart', startAudio, { once: true });
+window.addEventListener('scroll', startAudio, { once: true });
+
 /* ---------------- Background thread that grows with scroll ---------------- */
 const canvas = document.getElementById('threadCanvas');
 const ctx = canvas.getContext('2d');
@@ -599,5 +599,4 @@ waLink.href = "https://wa.me/?text=" + shareText;
 </script>
 
 </body>
-  </html>
-  
+</html>
